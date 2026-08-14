@@ -51,5 +51,12 @@ void	ss(t_node **a, t_node **b, int print);
 
 void	pa(t_node **a, t_node **b, int print);
 void	pb(t_node **a, t_node **b, int print);
+void    ra(t_stack **a, int print);
+void    rb(t_stack **b, int print);
+
+void    rr(t_stack **a, t_stack **b, int print);
+void    rra(t_stack **a, int print);
+void    rrb(t_stack **b, int print);
+void    rrr(t_stack **a, t_stack **b, int print);
 
 #endif
