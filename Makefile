@@ -19,6 +19,7 @@ main.c \
 validation_utils.c \
 swap.c \
 push.c \
+rotate.c \
 
 OBJS = $(ARCHIVES:.c=.o)
 

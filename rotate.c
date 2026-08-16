@@ -21,7 +21,7 @@ void ra(t_node **a, int print)
 	tail->next = first;
 	if (print)
 		write(1, "ra\n", 3);// ft_putendl_fd
-	}
+}
 
 void rb(t_node **b, int print)
 {
@@ -44,8 +44,8 @@ void rb(t_node **b, int print)
 	tail->next = first;
 	if (print)
 		write(1, "rb\n", 3);// ft_putendl_fd
-	}
-
+}
+ 
 void    rr(t_node **a, t_node **b, int print)
 {
 	ra(a, 0);
