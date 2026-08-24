@@ -29,12 +29,12 @@ void	create_stack(int argc, char *argv[], t_node **list)
 	char	**arguments;
 	int		j;
 	int		flag_type;
-	int		bench;
+	//int		bench;
 
 	i = 1;
 	j = 0;
 	flag_type = 0;
-	bench = 0;
+	//bench = 0;
 	arguments = NULL;
 	while (i < argc)
 	{
@@ -49,7 +49,7 @@ void	create_stack(int argc, char *argv[], t_node **list)
 			}
 			else if (is_bench(arguments[j]) != 0)
 			{
-				bench = is_bench(arguments[j]);
+				//bench = is_bench(arguments[j]);
 				j++;
 			}
 			else
@@ -65,12 +65,11 @@ void	create_stack(int argc, char *argv[], t_node **list)
 int	main(int argc, char *argv[])
 {
 	t_node	*stack_a;
-	t_node	*stack_b;
+	//t_node	*stack_b;
 
 	stack_a = NULL;
-	stack_b = NULL;
+	//stack_b = NULL;
 	create_stack(argc, argv, &stack_a);
 	assign_index(&stack_a);
-	disorder_check(stack_a);
 	return (0);
 }

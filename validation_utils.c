@@ -19,21 +19,21 @@ int	is_valid(char *s)
 	i = 0;
 	if (!s)
 	{
-		write(2, "ERROR\n", 6);
+		write(2, "Error\n", 6);
 		exit (EXIT_FAILURE);
 	}
 	if (s[i] == '+' || s[i] == '-')
 		i++;
 	if (s[i] == '\0')
 	{
-		write(2, "ERROR\n", 6);
+		write(2, "Error\n", 6);
 		exit (EXIT_FAILURE);
 	}
 	while (s[i] <= '9' && s[i] >= '0')
 		i++;
 	if ((s[i] < '0' || s[i] > '9') && s[i] != '\0')
 	{
-		write(2, "ERROR\n", 6);
+		write(2, "Error\n", 6);
 		exit (EXIT_FAILURE);
 	}
 	return (1);
@@ -45,7 +45,7 @@ int	has_duplicate(t_node *list, int value)
 	{
 		if (list->value == value)
 		{
-			write(2, "ERROR\n", 6);
+			write(2, "Error\n", 6);
 			exit (EXIT_FAILURE);
 		}
 		list = list->next;

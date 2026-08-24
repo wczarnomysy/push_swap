@@ -20,7 +20,7 @@ int	flag_detector(char *s, int flag)
 		return (2);
 	else if (strncmp(s, "--complex", 20) == 0 && (flag == 3 || flag == 0))
 		return (3);
-	else if (strncmp(s, "--adaptative", 20) == 0 && (flag == 4 || flag == 0))
+	else if (strncmp(s, "--adaptive", 20) == 0 && (flag == 4 || flag == 0))
 		return (4);
 	return (0);
 }

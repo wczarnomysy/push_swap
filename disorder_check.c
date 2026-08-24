@@ -26,7 +26,7 @@ float	disorder_check(t_node *list)
 		list = list->next;
 		total_pairs++;
 	}
-	if (list->next == NULL && list->prev->value > list->value)
+	if (list != NULL && list->prev != NULL &&list->next == NULL && list->prev->value > list->value)
 		mistakes++;
 	total_pairs++;
 	printf("Total pairs -> %d\nMistakes -> %d\n", total_pairs, mistakes);
