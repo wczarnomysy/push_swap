@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tguezala <tguezala@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wczarnom <wczarnom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/14 16:59:28 by tguezala          #+#    #+#             */
-/*   Updated: 2026/08/14 18:44:26 by tguezala         ###   ########.fr       */
+/*   Updated: 2026/08/26 19:23:20 by wczarnom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ void	create_stack(int argc, char *argv[], t_node **list)
 	char	**arguments;
 	int		j;
 	int		flag_type;
-	//int		bench;
 
+	// int		bench;
 	i = 1;
 	j = 0;
 	flag_type = 0;
-	//bench = 0;
+	// bench = 0;
 	arguments = NULL;
 	while (i < argc)
 	{
@@ -49,7 +49,7 @@ void	create_stack(int argc, char *argv[], t_node **list)
 			}
 			else if (is_bench(arguments[j]) != 0)
 			{
-				//bench = is_bench(arguments[j]);
+				// bench = is_bench(arguments[j]);
 				j++;
 			}
 			else
@@ -71,6 +71,8 @@ int	main(int argc, char *argv[])
 	stack_b = NULL;
 	create_stack(argc, argv, &stack_a);
 	assign_index(&stack_a);
+	if (ft_is_sorted(stack_a))
+		return (0);
 	sort_simple(&stack_a, &stack_b);
 	return (0);
 }

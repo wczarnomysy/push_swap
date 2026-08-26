@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   assign_index.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tguezala <tguezala@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wczarnom <wczarnom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/14 16:53:27 by tguezala          #+#    #+#             */
-/*   Updated: 2026/08/14 18:30:26 by tguezala         ###   ########.fr       */
+/*   Updated: 2026/08/26 19:33:40 by wczarnom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	assign_index(t_node **list)
 			current = current->next;
 		}
 		tmp->index = index;
-		printf("El index del valor %d es -> %d\n", tmp->value, tmp->index);
+		//printf("El index del valor %d es -> %d\n", tmp->value, tmp->index);
 		tmp = tmp->next;
 	}
 	return ;

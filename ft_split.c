@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tguezala <tguezala@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wczarnom <wczarnom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/14 16:41:30 by tguezala          #+#    #+#             */
-/*   Updated: 2026/08/14 17:13:39 by tguezala         ###   ########.fr       */
+/*   Updated: 2026/08/26 19:32:45 by wczarnom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	ft_free(char **res, size_t j)
 	return ;
 }
 
-static	size_t	ft_countwords(const char *s, char c)
+static size_t	ft_countwords(const char *s, char c)
 
 {
 	size_t	i;

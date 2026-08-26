@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   disorder_check.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tguezala <tguezala@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wczarnom <wczarnom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/14 16:54:44 by tguezala          #+#    #+#             */
-/*   Updated: 2026/08/14 17:15:36 by tguezala         ###   ########.fr       */
+/*   Updated: 2026/08/26 17:50:06 by wczarnom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ float	disorder_check(t_node *list)
 		list = list->next;
 		total_pairs++;
 	}
-	if (list != NULL && list->prev != NULL &&list->next == NULL && list->prev->value > list->value)
+	if (list != NULL && list->prev != NULL && list->next == NULL
+		&& list->prev->value > list->value)
 		mistakes++;
 	total_pairs++;
 	printf("Total pairs -> %d\nMistakes -> %d\n", total_pairs, mistakes);

@@ -14,14 +14,15 @@ ft_split.c \
 ft_strlen.c \
 ft_strncmp.c \
 ft_substr.c \
-ft_lstsize.c \
 is_bench.c \
 main.c \
 validation_utils.c \
 swap.c \
 push.c \
 rotate.c \
+ft_lstsize.c \
 simple_sorting.c \
+ft_is_sorted.c \
 
 OBJS = $(ARCHIVES:.c=.o)
 

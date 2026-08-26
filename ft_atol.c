@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tguezala <tguezala@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wczarnom <wczarnom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/14 16:45:42 by tguezala          #+#    #+#             */
-/*   Updated: 2026/08/14 17:13:03 by tguezala         ###   ########.fr       */
+/*   Updated: 2026/08/26 17:50:23 by wczarnom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,6 @@ long	ft_atol(const char *str)
 	}
 	result = result * sign;
 	if (result > INT_MAX || result < INT_MIN)
-		exit (EXIT_FAILURE);
+		exit(EXIT_FAILURE);
 	return (result);
 }
