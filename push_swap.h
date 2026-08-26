@@ -58,5 +58,9 @@ void    rr(t_node **a, t_node **b, int print);
 void    rra(t_node **a, int print);
 void    rrb(t_node **b, int print);
 void    rrr(t_node **a, t_node **b, int print);
+int		ft_lstsize(t_node *lst);
+
+t_node	*find_min(t_node *a);
+void	sort_simple(t_node **a, t_node **b);
 
 #endif

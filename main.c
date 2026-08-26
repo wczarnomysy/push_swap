@@ -65,11 +65,12 @@ void	create_stack(int argc, char *argv[], t_node **list)
 int	main(int argc, char *argv[])
 {
 	t_node	*stack_a;
-	//t_node	*stack_b;
+	t_node	*stack_b;
 
 	stack_a = NULL;
-	//stack_b = NULL;
+	stack_b = NULL;
 	create_stack(argc, argv, &stack_a);
 	assign_index(&stack_a);
+	sort_simple(&stack_a, &stack_b);
 	return (0);
 }
