@@ -23,6 +23,7 @@ rotate.c \
 ft_lstsize.c \
 simple_sorting.c \
 ft_is_sorted.c \
+medium_sorting.c \
 
 OBJS = $(ARCHIVES:.c=.o)
 

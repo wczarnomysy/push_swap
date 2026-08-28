@@ -71,8 +71,7 @@ int	main(int argc, char *argv[])
 	stack_b = NULL;
 	create_stack(argc, argv, &stack_a);
 	assign_index(&stack_a);
-	if (ft_is_sorted(stack_a))
-		return (0);
-	sort_simple(&stack_a, &stack_b);
+	if (!ft_is_sorted(stack_a))
+		sort_medium(&stack_a, &stack_b);
 	return (0);
 }

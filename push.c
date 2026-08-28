@@ -20,7 +20,12 @@ void	pa(t_node **a, t_node **b, int print)
 		return ;
 	tmp = *b;
 	*b = (*b)->next;
+	if (*b)
+		(*b)->prev = NULL;
 	tmp->next = *a;
+	tmp->prev = NULL;
+	if (*a)
+		(*a)->prev = tmp;
 	*a = tmp;
 	if (print)
 		write(1, "pa\n", 3);
@@ -34,7 +39,12 @@ void	pb(t_node **a, t_node **b, int print)
 		return ;
 	tmp = *a;
 	*a = (*a)->next;
+	if (*a)
+		(*a)->prev = NULL;
 	tmp->next = *b;
+	tmp->prev = NULL;
+	if (*b)
+		(*b)->prev = tmp;
 	*b = tmp;
 	if (print)
 		write(1, "pb\n", 3);

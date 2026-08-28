@@ -61,7 +61,10 @@ void				rrr(t_node **a, t_node **b, int print);
 
 int					ft_lstsize(t_node *list);
 t_node				*find_min(t_node *a);
+int					node_pos(t_node *a, t_node *target);
+void				move_to_top(t_node **a, int pos, int len);
 void				sort_simple(t_node **a, t_node **b);
+void				sort_medium(t_node **a, t_node **b);
 int					ft_is_sorted(t_node *a);
 
 #endif
