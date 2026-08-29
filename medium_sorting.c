@@ -3,11 +3,103 @@
 /*                                                        :::      ::::::::   */
 /*   medium_sorting.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: wczarnom <wczarnom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/08/29 17:26:33 by tguezala          #+#    #+#             */
+/*   Updated: 2026/08/29 21:24:55 by wczarnom         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+
+static t_node	*find_max(t_node *b)
+{
+	t_node	*max;
+
+	if (!b)
+		return (NULL);
+	max = b;
+	while (b)
+	{
+		if (b->index > max->index)
+			max = b;
+		b = b->next;
+	}
+	return (max);
+}
+
+static void	push_chunks_to_b(t_node **a, t_node **b, int chunk_size)
+{
+	int	pushed;
+
+	pushed = 0;
+	while (*a)
+	{
+		if ((*a)->index <= pushed + chunk_size)
+		{
+			pb(a, b, 1);
+			if ((*b)->index <= pushed + (chunk_size / 2))
+				rb(b, 1);
+			pushed++;
+		}
+		else
+			ra(a, 1);
+	}
+}
+
+static void	push_back_to_a(t_node **a, t_node **b)
+{
+	t_node	*max;
+	int		pos;
+	int		size;
+
+	while (*b)
+	{
+		max = find_max(*b);
+		pos = node_pos(*b, max);
+		size = ft_lstsize(*b);
+		if (pos <= size / 2)
+		{
+			while (*b != max)
+				rb(b, 1);
+		}
+		else
+		{
+			while (*b != max)
+				rrb(b, 1);
+		}
+		pa(a, b, 1);
+	}
+}
+
+int	node_pos(t_node *stack, t_node *target)
+{
+	int	pos;
+
+	pos = 0;
+	while (stack)
+	{
+		if (stack->index == target->index)
+			return (pos);
+		pos++;
+		stack = stack->next;
+	}
+	return (pos);
+}
+
+void	sort_medium(t_node **a, t_node **b)
+{
+	int	chunk_size;
+
+	if (ft_lstsize(*a) <= 100)
+		chunk_size = 15;
+	else
+		chunk_size = 30;
+	push_chunks_to_b(a, b, chunk_size);
+	push_back_to_a(a, b);
+}
+/*
 static int	chunk_size_for(int n)
 {
 	int	size;
@@ -92,4 +184,4 @@ void	sort_medium(t_node **a, t_node **b)
 	}
 	while (*b)
 		pa(a, b, 1);
-}
+}*/

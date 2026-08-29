@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_bench.c                                         :+:      :+:    :+:   */
+/*   sort_stack.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tguezala <tguezala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/14 16:44:51 by tguezala          #+#    #+#             */
-/*   Updated: 2026/08/24 21:10:22 by tguezala         ###   ########.fr       */
+/*   Created: 2026/08/24 20:58:33 by tguezala          #+#    #+#             */
+/*   Updated: 2026/08/29 20:03:51 by tguezala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	is_bench(char *s, int *bench)
+void	sort_stack(t_node **a, t_node **b, int size, int *flag)
 {
-	if (ft_strncmp(s, "--bench", 20) == 0)
-	{
-		*bench = 1;
-		return (1);
-	}
-	return (0);
+	if ((size >= 3 && size <= 5) || *flag == 1)
+		sort_simple(a, b);
+	if (*flag == 2)
+		sort_medium(a, b);
+	if (*flag == 3)
+		radix_sort(a, b);
+	if (*flag ==  4 || *flag == 0)
+		adaptive_sort(a, b, disorder_check(*a));
 }

@@ -6,55 +6,11 @@
 /*   By: wczarnom <wczarnom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/26 16:06:20 by wczarnom          #+#    #+#             */
-/*   Updated: 2026/08/26 19:25:33 by wczarnom         ###   ########.fr       */
+/*   Updated: 2026/08/29 21:25:40 by wczarnom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-t_node	*find_min(t_node *a)
-{
-	t_node	*min;
-
-	min = a;
-	while (a)
-	{
-		if (a->index < min->index)
-			min = a;
-		a = a->next;
-	}
-	return (min);
-}
-
-int	node_pos(t_node *a, t_node *target)
-{
-	int	pos;
-
-	pos = 0;
-	while (a != target)
-	{
-		a = a->next;
-		pos++;
-	}
-	return (pos);
-}
-
-void	move_to_top(t_node **a, int pos, int len)
-{
-	int	rra_steps;
-
-	rra_steps = len - pos;
-	if (pos <= rra_steps)
-	{
-		while (pos-- > 0)
-			ra(a, 1);
-	}
-	else
-	{
-		while (rra_steps-- > 0)
-			rra(a, 1);
-	}
-}
 
 static void	sort_three(t_node **a)
 {
@@ -138,11 +94,12 @@ void	sort_simple(t_node **a, t_node **b)
 		sort_five(a, b);
 		return ;
 	}
-	while (len > 0)
+	/*while (len > 0)
 	{
 		push_min_to_b(a, b, len);
 		len--;
 	}
 	while (*b)
-		pa(a, b, 1);
+		pa(a, b, 1);*/
+	radix_sort(a, b);
 }

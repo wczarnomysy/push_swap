@@ -20,10 +20,15 @@ validation_utils.c \
 swap.c \
 push.c \
 rotate.c \
-ft_lstsize.c \
-simple_sorting.c \
-ft_is_sorted.c \
+radix_sort.c \
+sort_utils.c \
+get_utils.c \
+reverse_rotate.c \
+sort_stack.c \
 medium_sorting.c \
+simple_sorting.c \
+ft_lstsize.c \
+adaptive_sort.c \
 
 OBJS = $(ARCHIVES:.c=.o)
 

@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_bench.c                                         :+:      :+:    :+:   */
+/*   adaptive_sort.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tguezala <tguezala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/14 16:44:51 by tguezala          #+#    #+#             */
-/*   Updated: 2026/08/24 21:10:22 by tguezala         ###   ########.fr       */
+/*   Created: 2026/08/29 19:58:38 by tguezala          #+#    #+#             */
+/*   Updated: 2026/08/29 20:04:16 by tguezala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	is_bench(char *s, int *bench)
+void	adaptive_sort(t_node **a, t_node **b, float disorder)
 {
-	if (ft_strncmp(s, "--bench", 20) == 0)
-	{
-		*bench = 1;
-		return (1);
-	}
-	return (0);
+	if (disorder < 0.2)
+		sort_simple(a, b);
+	else if (disorder >= 0.2 && disorder < 0.5)
+		sort_medium(a, b);
+	else if (disorder >= 0.5)
+		radix_sort(a, b);
 }

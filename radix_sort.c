@@ -1,23 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_bench.c                                         :+:      :+:    :+:   */
+/*   radix_sort.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tguezala <tguezala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/14 16:44:51 by tguezala          #+#    #+#             */
-/*   Updated: 2026/08/24 21:10:22 by tguezala         ###   ########.fr       */
+/*   Created: 2026/08/20 17:58:10 by tguezala          #+#    #+#             */
+/*   Updated: 2026/08/29 19:19:28 by tguezala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	is_bench(char *s, int *bench)
+void	radix_sort(t_node **a, t_node **b)
 {
-	if (ft_strncmp(s, "--bench", 20) == 0)
+	int	i;
+	int	j;
+	int	size;
+	int	max_bits;
+
+	size = get_stack_size(*a);
+	max_bits = get_max_bits(size);
+	i = 0;
+	while (i < max_bits)
 	{
-		*bench = 1;
-		return (1);
+		j = 0;
+		while (j < size)
+		{
+			if (((*a)->index >> i & 1) == 0)
+				pb(a, b, 0);
+			else
+				ra(a, 0);
+			j++;
+		}
+		while (*b)
+			pa(a, b, 0);
+		i++;
 	}
-	return (0);
 }

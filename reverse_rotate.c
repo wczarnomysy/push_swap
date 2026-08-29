@@ -1,59 +1,62 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rotate.c                                           :+:      :+:    :+:   */
+/*   reverse_rotate.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wczarnom <wczarnom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tguezala <tguezala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/19 20:13:43 by tguezala          #+#    #+#             */
-/*   Updated: 2026/08/29 21:25:28 by wczarnom         ###   ########.fr       */
+/*   Created: 2026/08/24 20:33:05 by tguezala          #+#    #+#             */
+/*   Updated: 2026/08/29 19:26:27 by tguezala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	ra(t_node **a, int print)
+void	rra(t_node **a, int print)
 {
-	t_node	*first;
 	t_node	*last;
 
-	if (!a || !*a || !(*a)->next)
-	return ;
-	first = *a;
-	*a = (*a)->next;
-	(*a)->prev = NULL;
-	first->next = NULL;
+	if (!*a || !(*a)->next)
+		return ;
 	last = *a;
-	while (last->next)
+	while (last->next != NULL)
+	{
 		last = last->next;
-	last->next = first;
+	}
+	last->prev->next = NULL;
+	last->next = *a;
+	(*a)->prev = last;
+	last->prev = NULL;
+	*a = last;
 	if (print)
-		write(1, "ra\n", 3);
+		write(1, "rra\n", 4);
 }
 
-void	rb(t_node **b, int print)
+void rrb(t_node **b, int print)
 {
-	t_node	*first;
+	t_node	*prev;
 	t_node	*last;
 
 	if (!b || !*b || !(*b)->next)
 		return ;
-	first = *b;
-	*b = (*b)->next;
-	(*b)->prev = NULL;
-	first->next = NULL;
+	prev = NULL;
 	last = *b;
 	while (last->next)
+	{
+		prev = last;
 		last = last->next;
-	last->next = first;
+	}
+	prev->next = NULL;
+	last->next = *b;
+	*b = last;
 	if (print)
-		write(1, "rb\n", 3);
+		write(1, "rrb\n", 4);
 }
 
-void	rr(t_node **a, t_node **b, int print)
+void	rrr(t_node **a, t_node **b, int print)
 {
-	ra(a, 0);
-	rb(b, 0);
+	rra(a, 0);
+	rrb(b, 0);
 	if (print)
-		write(1, "rr\n", 3);
+		write(1, "rrr\n", 4);
 }
