@@ -1,36 +1,33 @@
-NAME = push_swap.out
+NAME = push_swap
 HEADER = push_swap.h
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-ARCHIVES = assign_index.c \
-disorder_check.c \
-flag_detector.c \
-ft_atol.c \
-ft_lstadd_back.c \
-ft_lstnew.c \
-ft_split.c \
-ft_strlen.c \
-ft_strncmp.c \
-ft_substr.c \
-is_bench.c \
-main.c \
-validation_utils.c \
-swap.c \
-push.c \
-rotate.c \
-radix_sort.c \
-sort_utils.c \
-get_utils.c \
-reverse_rotate.c \
-sort_stack.c \
-medium_sorting.c \
-simple_sorting.c \
-ft_lstsize.c \
-adaptive_sort.c \
+SRCS = main.c \
+	parsing.c \
+	flag_detector.c \
+	ft_string.c \
+	ft_split.c \
+	lst_utils.c \
+	free_utils.c \
+	stack_utils.c \
+	stack_analysis.c \
+	op_utils.c \
+	bench.c \
+	bench_utils.c \
+	swap.c \
+	push.c \
+	rotate.c \
+	reverse_rotate.c \
+	sort_stack.c \
+	sort_small.c \
+	sort_simple.c \
+	sort_medium.c \
+	radix_sort.c \
+	adaptive_sort.c \
 
-OBJS = $(ARCHIVES:.c=.o)
+OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 
@@ -41,7 +38,7 @@ $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
 clean:
-	rm -rf $(OBJS)
+	rm -f $(OBJS)
 
 fclean: clean
 	rm -f $(NAME)

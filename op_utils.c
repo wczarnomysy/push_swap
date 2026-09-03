@@ -1,33 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   flag_detector.c                                    :+:      :+:    :+:   */
+/*   op_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: telmo <telmo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/14 16:43:52 by tguezala          #+#    #+#             */
+/*   Created: 2026/09/03 00:00:00 by telmo             #+#    #+#             */
 /*   Updated: 2026/09/03 00:00:00 by telmo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	flag_detector(char *s, t_op *op)
+void	init_op(t_op *op)
 {
-	if (ft_strncmp(s, "--bench", 8) == 0)
+	int	i;
+
+	op->flag = FLAG_ADAPTIVE;
+	op->complexity = COMPLEXITY_UNKNOWN;
+	op->bench = 0;
+	op->disorder = 0.0f;
+	op->total = 0;
+	i = 0;
+	while (i < OP_COUNT)
+		op->count[i++] = 0;
+}
+
+void	do_op(t_op *op, t_opid id, int print)
+{
+	static const char	*const names[OP_COUNT] = {
+		"sa\n", "sb\n", "ss\n", "pa\n", "pb\n", "ra\n", "rb\n",
+		"rr\n", "rra\n", "rrb\n", "rrr\n"};
+
+	if (op)
 	{
-		op->bench = 1;
-		return (1);
+		op->count[id] += 1;
+		op->total += 1;
 	}
-	if (ft_strncmp(s, "--simple", 9) == 0)
-		op->flag = FLAG_SIMPLE;
-	else if (ft_strncmp(s, "--medium", 9) == 0)
-		op->flag = FLAG_MEDIUM;
-	else if (ft_strncmp(s, "--complex", 10) == 0)
-		op->flag = FLAG_COMPLEX;
-	else if (ft_strncmp(s, "--adaptive", 11) == 0)
-		op->flag = FLAG_ADAPTIVE;
-	else
-		return (0);
-	return (1);
+	if (print)
+		write(1, names[id], ft_strlen(names[id]));
 }

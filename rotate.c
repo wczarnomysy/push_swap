@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   rotate.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wczarnom <wczarnom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: telmo <telmo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 20:13:43 by tguezala          #+#    #+#             */
-/*   Updated: 2026/08/29 21:25:28 by wczarnom         ###   ########.fr       */
+/*   Updated: 2026/09/03 00:00:00 by telmo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	ra(t_node **a, int print)
+void	ra(t_node **a, int print, t_op *op)
 {
 	t_node	*first;
 	t_node	*last;
 
 	if (!a || !*a || !(*a)->next)
-	return ;
+		return ;
 	first = *a;
 	*a = (*a)->next;
 	(*a)->prev = NULL;
@@ -27,11 +27,11 @@ void	ra(t_node **a, int print)
 	while (last->next)
 		last = last->next;
 	last->next = first;
-	if (print)
-		write(1, "ra\n", 3);
+	first->prev = last;
+	do_op(op, OP_RA, print);
 }
 
-void	rb(t_node **b, int print)
+void	rb(t_node **b, int print, t_op *op)
 {
 	t_node	*first;
 	t_node	*last;
@@ -46,14 +46,15 @@ void	rb(t_node **b, int print)
 	while (last->next)
 		last = last->next;
 	last->next = first;
-	if (print)
-		write(1, "rb\n", 3);
+	first->prev = last;
+	do_op(op, OP_RB, print);
 }
 
-void	rr(t_node **a, t_node **b, int print)
+void	rr(t_node **a, t_node **b, int print, t_op *op)
 {
-	ra(a, 0);
-	rb(b, 0);
-	if (print)
-		write(1, "rr\n", 3);
+	if (!a || !*a || !(*a)->next || !b || !*b || !(*b)->next)
+		return ;
+	ra(a, 0, NULL);
+	rb(b, 0, NULL);
+	do_op(op, OP_RR, print);
 }

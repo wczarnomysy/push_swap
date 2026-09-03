@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wczarnom <wczarnom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: telmo <telmo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/14 16:41:30 by tguezala          #+#    #+#             */
-/*   Updated: 2026/08/26 19:32:45 by wczarnom         ###   ########.fr       */
+/*   Updated: 2026/09/03 00:00:00 by telmo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,9 @@ static void	ft_free(char **res, size_t j)
 		free(res[j]);
 	}
 	free(res);
-	return ;
 }
 
 static size_t	ft_countwords(const char *s, char c)
-
 {
 	size_t	i;
 	size_t	j;
@@ -76,7 +74,10 @@ char	**ft_split(char const *s, char c)
 	{
 		res[j] = get_word(s, c, &i);
 		if (!res[j])
-			return (ft_free(res, j), NULL);
+		{
+			ft_free(res, j);
+			return (NULL);
+		}
 		j++;
 	}
 	res[j] = NULL;

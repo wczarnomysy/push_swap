@@ -1,41 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   validation_utils.c                                 :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wczarnom <wczarnom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/14 16:56:16 by tguezala          #+#    #+#             */
-/*   Updated: 2026/08/26 19:08:58 by wczarnom         ###   ########.fr       */
+/*   Created: 2026/09/03 00:00:00 by wczarnom          #+#    #+#             */
+/*   Updated: 2026/09/03 00:00:00 by wczarnom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	is_valid(char *s)
+int	parse_int(const char *s, int *out)
 {
-	int	i;
+	long	res;
+	long	sign;
+	int		i;
 
 	i = 0;
-	if (!s)
-	{
-		write(2, "Error\n", 6);
-		exit(EXIT_FAILURE);
-	}
+	res = 0;
+	sign = 1;
 	if (s[i] == '+' || s[i] == '-')
-		i++;
-	if (s[i] == '\0')
 	{
-		write(2, "Error\n", 6);
-		exit(EXIT_FAILURE);
-	}
-	while (s[i] <= '9' && s[i] >= '0')
+		if (s[i] == '-')
+			sign = -1;
 		i++;
-	if ((s[i] < '0' || s[i] > '9') && s[i] != '\0')
-	{
-		write(2, "Error\n", 6);
-		exit(EXIT_FAILURE);
 	}
+	if (!s[i])
+		return (0);
+	while (s[i])
+	{
+		if (s[i] < '0' || s[i] > '9')
+			return (0);
+		res = res * 10 + (s[i++] - '0');
+		if (res > 2147483648L)
+			return (0);
+	}
+	res = res * sign;
+	if (res > INT_MAX || res < INT_MIN)
+		return (0);
+	*out = (int)res;
 	return (1);
 }
 
@@ -44,11 +49,8 @@ int	has_duplicate(t_node *list, int value)
 	while (list)
 	{
 		if (list->value == value)
-		{
-			write(2, "Error\n", 6);
-			exit(EXIT_FAILURE);
-		}
+			return (1);
 		list = list->next;
 	}
-	return (1);
+	return (0);
 }

@@ -3,79 +3,87 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wczarnom <wczarnom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: telmo <telmo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/14 16:59:28 by tguezala          #+#    #+#             */
-/*   Updated: 2026/08/29 21:23:48 by wczarnom         ###   ########.fr       */
+/*   Updated: 2026/09/03 00:00:00 by telmo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	create_node(char *arguments, t_node **list)
+static int	add_arg(char *arg, t_node **a, t_op *op)
 {
-	long	value;
+	t_node	*node;
+	int		value;
 
-	value = 0;
-	is_valid(arguments);
-	value = ft_atol(arguments);
-	has_duplicate(*list, value);
-	ft_lstadd_back(list, ft_lstnew(value));
+	if (flag_detector(arg, op) != 0)
+		return (1);
+	if (!parse_int(arg, &value) || has_duplicate(*a, value))
+		return (0);
+	node = ft_lstnew(value);
+	if (!node)
+		return (0);
+	ft_lstadd_back(a, node);
+	return (1);
 }
 
-void	create_stack(int argc, char *argv[], t_node **list, int *flag, int *bench)
+static int	create_stack(int argc, char **argv, t_node **a, t_op *op)
 {
+	char	**split;
 	int		i;
-	char	**arguments;
 	int		j;
 
 	i = 1;
-	j = 0;
-	arguments = NULL;
 	while (i < argc)
 	{
-		arguments = ft_split(argv[i], ' ');
-		j = 0;
-		while (arguments[j])
+		split = ft_split(argv[i], ' ');
+		if (!split)
+			return (0);
+		if (!split[0])
 		{
-			if (flag_detector(arguments[j], flag) != 0)
-				j++;
-			else if (is_bench(arguments[j], bench) != 0)
-				j++;
-			else
-			{
-				create_node(arguments[j], list);
-				j++;
-			}
+			free_split(split);
+			return (0);
 		}
+		j = 0;
+		while (split[j])
+		{
+			if (!add_arg(split[j], a, op))
+			{
+				free_split(split);
+				return (0);
+			}
+			j++;
+		}
+		free_split(split);
 		i++;
 	}
+	return (1);
 }
 
-int main(int argc, char *argv[])
+int	main(int argc, char **argv)
 {
-    t_node  *stack_a;
-    t_node  *stack_b;
-    int     flag;
-    int     bench;
+	t_node	*a;
+	t_node	*b;
+	t_op	op;
 
-    flag = 0;
-    bench = 0;
-    stack_a = NULL;
-    stack_b = NULL;
-    create_stack(argc, argv, &stack_a, &flag, &bench);
-    assign_index(&stack_a);
-    disorder_check(stack_a);
-    
-    // CORRECCIÓN: Pasar stack_a (por valor), NO &stack_a
-    sort_stack(&stack_a, &stack_b, get_stack_size(stack_a), &flag);
-
-    // Guardamos la cabecera original en una variable temporal para imprimir
-    t_node *curr = stack_a;
-    while (curr)
-    {
-        printf("valor a %d\n", curr->value);
-        curr = curr->next;
-    }
-    return (0);
+	a = NULL;
+	b = NULL;
+	init_op(&op);
+	if (!create_stack(argc, argv, &a, &op))
+	{
+		free_stack(&a);
+		write(2, "Error\n", 6);
+		return (1);
+	}
+	if (!a)
+		return (0);
+	assign_index(&a);
+	op.disorder = disorder_check(a);
+	sort_stack(&a, &b, get_stack_size(a), &op);
+	if (op.bench == 1)
+		print_bench_results(&op);
+	free_stack(&a);
+	free_stack(&b);
+	return (0);
 }

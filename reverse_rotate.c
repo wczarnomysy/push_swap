@@ -3,36 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   reverse_rotate.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tguezala <tguezala@student.42.fr>          +#+  +:+       +#+        */
+/*   By: telmo <telmo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/24 20:33:05 by tguezala          #+#    #+#             */
-/*   Updated: 2026/08/29 19:26:27 by tguezala         ###   ########.fr       */
+/*   Updated: 2026/09/03 00:00:00 by telmo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	rra(t_node **a, int print)
+void	rra(t_node **a, int print, t_op *op)
 {
+	t_node	*prev;
 	t_node	*last;
 
-	if (!*a || !(*a)->next)
+	if (!a || !*a || !(*a)->next)
 		return ;
+	prev = NULL;
 	last = *a;
-	while (last->next != NULL)
+	while (last->next)
 	{
+		prev = last;
 		last = last->next;
 	}
-	last->prev->next = NULL;
+	prev->next = NULL;
 	last->next = *a;
-	(*a)->prev = last;
 	last->prev = NULL;
+	(*a)->prev = last;
 	*a = last;
-	if (print)
-		write(1, "rra\n", 4);
+	do_op(op, OP_RRA, print);
 }
 
-void rrb(t_node **b, int print)
+void	rrb(t_node **b, int print, t_op *op)
 {
 	t_node	*prev;
 	t_node	*last;
@@ -48,15 +50,17 @@ void rrb(t_node **b, int print)
 	}
 	prev->next = NULL;
 	last->next = *b;
+	last->prev = NULL;
+	(*b)->prev = last;
 	*b = last;
-	if (print)
-		write(1, "rrb\n", 4);
+	do_op(op, OP_RRB, print);
 }
 
-void	rrr(t_node **a, t_node **b, int print)
+void	rrr(t_node **a, t_node **b, int print, t_op *op)
 {
-	rra(a, 0);
-	rrb(b, 0);
-	if (print)
-		write(1, "rrr\n", 4);
+	if (!a || !*a || !(*a)->next || !b || !*b || !(*b)->next)
+		return ;
+	rra(a, 0, NULL);
+	rrb(b, 0, NULL);
+	do_op(op, OP_RRR, print);
 }

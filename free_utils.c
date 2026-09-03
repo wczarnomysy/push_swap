@@ -1,33 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   flag_detector.c                                    :+:      :+:    :+:   */
+/*   free_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: telmo <telmo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/14 16:43:52 by tguezala          #+#    #+#             */
+/*   Created: 2026/09/03 00:00:00 by telmo             #+#    #+#             */
 /*   Updated: 2026/09/03 00:00:00 by telmo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	flag_detector(char *s, t_op *op)
+void	free_stack(t_node **stack)
 {
-	if (ft_strncmp(s, "--bench", 8) == 0)
+	t_node	*tmp;
+	t_node	*current;
+
+	if (!stack || !*stack)
+		return ;
+	current = *stack;
+	while (current)
 	{
-		op->bench = 1;
-		return (1);
+		tmp = current->next;
+		free(current);
+		current = tmp;
 	}
-	if (ft_strncmp(s, "--simple", 9) == 0)
-		op->flag = FLAG_SIMPLE;
-	else if (ft_strncmp(s, "--medium", 9) == 0)
-		op->flag = FLAG_MEDIUM;
-	else if (ft_strncmp(s, "--complex", 10) == 0)
-		op->flag = FLAG_COMPLEX;
-	else if (ft_strncmp(s, "--adaptive", 11) == 0)
-		op->flag = FLAG_ADAPTIVE;
-	else
-		return (0);
-	return (1);
+	*stack = NULL;
+}
+
+void	free_split(char **split)
+{
+	int	i;
+
+	if (!split)
+		return ;
+	i = 0;
+	while (split[i])
+	{
+		free(split[i]);
+		i++;
+	}
+	free(split);
 }
