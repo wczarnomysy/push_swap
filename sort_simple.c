@@ -6,13 +6,12 @@
 /*   By: tguezala <tguezala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/26 16:06:20 by wczarnom          #+#    #+#             */
-/*   Updated: 2026/09/04 18:33:02 by tguezala         ###   ########.fr       */
+/*   Updated: 2026/09/04 20:12:07 by tguezala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-/* Bring the current minimum of a to the top, then push it to b. */
 void	push_min_to_b(t_node **a, t_node **b, int len, t_op *op)
 {
 	t_node	*min;
@@ -24,10 +23,6 @@ void	push_min_to_b(t_node **a, t_node **b, int len, t_op *op)
 	pb(a, b, op);
 }
 
-/*
-** Selection sort in the push_swap model: O(n^2) operations. Repeatedly extract
-** the minimum into b, then pour b back onto a (already ascending on top).
-*/
 void	sort_simple(t_node **a, t_node **b, t_op *op)
 {
 	int	len;

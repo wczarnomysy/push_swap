@@ -6,13 +6,12 @@
 /*   By: tguezala <tguezala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/26 16:06:20 by wczarnom          #+#    #+#             */
-/*   Updated: 2026/09/04 18:32:44 by tguezala         ###   ########.fr       */
+/*   Updated: 2026/09/04 20:12:17 by tguezala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-/* Sort exactly 3 nodes (by rank index) with at most 2 operations. */
 static void	sort_three(t_node **a, t_op *op)
 {
 	int	f;
@@ -56,7 +55,6 @@ static void	sort_five(t_node **a, t_node **b, t_op *op)
 	pa(a, b, op);
 }
 
-/* Entry point for 2..5 elements (larger inputs never reach here). */
 void	sort_small(t_node **a, t_node **b, t_op *op)
 {
 	int	len;
