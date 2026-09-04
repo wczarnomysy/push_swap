@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wczarnom <wczarnom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tguezala <tguezala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/03 00:00:00 by wczarnom          #+#    #+#             */
-/*   Updated: 2026/09/03 00:00:00 by wczarnom         ###   ########.fr       */
+/*   Updated: 2026/09/04 18:56:43 by tguezala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,11 @@ int	parse_int(const char *s, int *out)
 		if (s[i] < '0' || s[i] > '9')
 			return (0);
 		res = res * 10 + (s[i++] - '0');
-		if (res > 2147483648L)
-			return (0);
 	}
 	res = res * sign;
 	if (res > INT_MAX || res < INT_MIN)
 		return (0);
-	*out = (int)res;
-	return (1);
+	return (*out = (int)res, 1);
 }
 
 int	has_duplicate(t_node *list, int value)

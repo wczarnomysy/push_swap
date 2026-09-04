@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   swap.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: telmo <telmo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tguezala <tguezala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/14 18:35:17 by tguezala          #+#    #+#             */
-/*   Updated: 2026/09/03 00:00:00 by telmo            ###   ########.fr       */
+/*   Updated: 2026/09/04 18:25:35 by tguezala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	sa(t_node **a, int print, t_op *op)
+void	sa(t_node **a, t_op *op)
 {
 	int	tmp;
 
@@ -24,10 +24,16 @@ void	sa(t_node **a, int print, t_op *op)
 	tmp = (*a)->index;
 	(*a)->index = (*a)->next->index;
 	(*a)->next->index = tmp;
-	do_op(op, OP_SA, print);
+	if (op)
+	{
+		op->count[OP_SA] += 1;
+		op->total += 1;
+	}
+	if (op->print)
+		write(1, "sa\n", 3);
 }
 
-void	sb(t_node **b, int print, t_op *op)
+void	sb(t_node **b, t_op *op)
 {
 	int	tmp;
 
@@ -39,14 +45,26 @@ void	sb(t_node **b, int print, t_op *op)
 	tmp = (*b)->index;
 	(*b)->index = (*b)->next->index;
 	(*b)->next->index = tmp;
-	do_op(op, OP_SB, print);
+	if (op)
+	{
+		op->count[OP_SB] += 1;
+		op->total += 1;
+	}
+	if (op->print)
+		write(1, "sb\n", 3);
 }
 
-void	ss(t_node **a, t_node **b, int print, t_op *op)
+void	ss(t_node **a, t_node **b, t_op *op)
 {
 	if (!a || !*a || !(*a)->next || !b || !*b || !(*b)->next)
 		return ;
-	sa(a, 0, NULL);
-	sb(b, 0, NULL);
-	do_op(op, OP_SS, print);
+	sa(a, NULL);
+	sb(b, NULL);
+	if (op)
+	{
+		op->count[OP_SS] += 1;
+		op->total += 1;
+	}
+	if (op->print)
+		write(1, "ss\n", 3);
 }

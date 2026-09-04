@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sort_simple.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wczarnom <wczarnom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tguezala <tguezala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/26 16:06:20 by wczarnom          #+#    #+#             */
-/*   Updated: 2026/09/03 00:00:00 by wczarnom         ###   ########.fr       */
+/*   Updated: 2026/09/04 18:33:02 by tguezala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	push_min_to_b(t_node **a, t_node **b, int len, t_op *op)
 	min = find_min(*a);
 	pos = node_pos(*a, min);
 	move_to_top(a, pos, len, op);
-	pb(a, b, 1, op);
+	pb(a, b, op);
 }
 
 /*
@@ -39,5 +39,5 @@ void	sort_simple(t_node **a, t_node **b, t_op *op)
 		len--;
 	}
 	while (*b)
-		pa(a, b, 1, op);
+		pa(a, b, op);
 }

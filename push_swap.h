@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: telmo <telmo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tguezala <tguezala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/11 15:58:17 by tguezala          #+#    #+#             */
-/*   Updated: 2026/09/03 00:00:00 by telmo            ###   ########.fr       */
+/*   Updated: 2026/09/04 20:06:19 by tguezala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,11 @@ typedef enum e_opid
 	OP_COUNT
 }	t_opid;
 
-# define FLAG_ADAPTIVE 0
+# define FLAG_UNKNOWN 0
 # define FLAG_SIMPLE 1
 # define FLAG_MEDIUM 2
 # define FLAG_COMPLEX 3
+# define FLAG_ADAPTIVE 4
 
 # define COMPLEXITY_UNKNOWN 0
 # define COMPLEXITY_SMALL 1
@@ -59,9 +60,16 @@ typedef struct s_op
 	int		complexity;
 	int		bench;
 	float	disorder;
+	int		print;
 	int		count[OP_COUNT];
 	int		total;
 }			t_op;
+
+typedef struct s_range
+{
+	int	lo;
+	int	hi;
+}				t_range;
 
 size_t		ft_strlen(const char *s);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -90,7 +98,6 @@ int			node_pos(t_node *stack, t_node *target);
 void		move_to_top(t_node **a, int pos, int len, t_op *op);
 
 void		init_op(t_op *op);
-void		do_op(t_op *op, t_opid id, int print);
 void		ft_putnbr_fd(int n, int fd);
 void		bench_put_count(const char *label, int n);
 void		bench_put_disorder(float d);
@@ -98,17 +105,17 @@ const char	*bench_strat_name(int flag);
 const char	*bench_class_name(int complexity);
 void		print_bench_results(t_op *op);
 
-void		sa(t_node **a, int print, t_op *op);
-void		sb(t_node **b, int print, t_op *op);
-void		ss(t_node **a, t_node **b, int print, t_op *op);
-void		pa(t_node **a, t_node **b, int print, t_op *op);
-void		pb(t_node **a, t_node **b, int print, t_op *op);
-void		ra(t_node **a, int print, t_op *op);
-void		rb(t_node **b, int print, t_op *op);
-void		rr(t_node **a, t_node **b, int print, t_op *op);
-void		rra(t_node **a, int print, t_op *op);
-void		rrb(t_node **b, int print, t_op *op);
-void		rrr(t_node **a, t_node **b, int print, t_op *op);
+void		sa(t_node **a, t_op *op);
+void		sb(t_node **b, t_op *op);
+void		ss(t_node **a, t_node **b, t_op *op);
+void		pa(t_node **a, t_node **b, t_op *op);
+void		pb(t_node **a, t_node **b, t_op *op);
+void		ra(t_node **a, t_op *op);
+void		rb(t_node **b, t_op *op);
+void		rr(t_node **a, t_node **b, t_op *op);
+void		rra(t_node **a, t_op *op);
+void		rrb(t_node **b, t_op *op);
+void		rrr(t_node **a, t_node **b, t_op *op);
 
 void		sort_stack(t_node **a, t_node **b, int size, t_op *op);
 void		sort_small(t_node **a, t_node **b, t_op *op);

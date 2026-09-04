@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: telmo <telmo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tguezala <tguezala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/14 16:59:28 by tguezala          #+#    #+#             */
-/*   Updated: 2026/09/03 00:00:00 by telmo            ###   ########.fr       */
+/*   Updated: 2026/09/04 20:01:42 by tguezala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,34 +28,36 @@ static int	add_arg(char *arg, t_node **a, t_op *op)
 	return (1);
 }
 
-static int	create_stack(int argc, char **argv, t_node **a, t_op *op)
+static int	process_arg(char *arg, t_node **a, t_op *op)
 {
 	char	**split;
-	int		i;
 	int		j;
+
+	split = ft_split(arg, ' ');
+	if (!split)
+		return (0);
+	if (!split[0])
+		return (free_split(split), 0);
+	j = 0;
+	while (split[j])
+	{
+		if (!add_arg(split[j], a, op))
+			return (free_split(split), 0);
+		j++;
+	}
+	free_split(split);
+	return (1);
+}
+
+static int	create_stack(int argc, char **argv, t_node **a, t_op *op)
+{
+	int	i;
 
 	i = 1;
 	while (i < argc)
 	{
-		split = ft_split(argv[i], ' ');
-		if (!split)
+		if (!process_arg(argv[i], a, op))
 			return (0);
-		if (!split[0])
-		{
-			free_split(split);
-			return (0);
-		}
-		j = 0;
-		while (split[j])
-		{
-			if (!add_arg(split[j], a, op))
-			{
-				free_split(split);
-				return (0);
-			}
-			j++;
-		}
-		free_split(split);
 		i++;
 	}
 	return (1);

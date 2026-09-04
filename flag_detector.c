@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flag_detector.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: telmo <telmo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tguezala <tguezala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/14 16:43:52 by tguezala          #+#    #+#             */
-/*   Updated: 2026/09/03 00:00:00 by telmo            ###   ########.fr       */
+/*   Updated: 2026/09/04 20:02:28 by tguezala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,17 @@ int	flag_detector(char *s, t_op *op)
 		op->bench = 1;
 		return (1);
 	}
-	if (ft_strncmp(s, "--simple", 9) == 0)
+	if (ft_strncmp(s, "--simple", 9) == 0
+		&& (op->flag == 1 || op->flag == 0))
 		op->flag = FLAG_SIMPLE;
-	else if (ft_strncmp(s, "--medium", 9) == 0)
+	else if (ft_strncmp(s, "--medium", 9) == 0
+		&& (op->flag == 2 || op->flag == 0))
 		op->flag = FLAG_MEDIUM;
-	else if (ft_strncmp(s, "--complex", 10) == 0)
+	else if (ft_strncmp(s, "--complex", 10) == 0
+		&& (op->flag == 3 || op->flag == 0))
 		op->flag = FLAG_COMPLEX;
-	else if (ft_strncmp(s, "--adaptive", 11) == 0)
+	else if (ft_strncmp(s, "--adaptive", 11) == 0
+		&& (op->flag == 4 || op->flag == 0))
 		op->flag = FLAG_ADAPTIVE;
 	else
 		return (0);

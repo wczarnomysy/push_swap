@@ -6,13 +6,12 @@
 /*   By: tguezala <tguezala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/29 17:26:33 by tguezala          #+#    #+#             */
-/*   Updated: 2026/09/03 00:00:00 by tguezala         ###   ########.fr       */
+/*   Updated: 2026/09/04 19:53:46 by tguezala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-/* ~sqrt(n) sized chunks: O(n*sqrt(n)) operations. */
 static int	chunk_size_for(int n)
 {
 	int	r;
@@ -39,29 +38,28 @@ static t_node	*find_max_idx(t_node *b)
 	return (max);
 }
 
-/* Push every node whose rank falls in [lo, hi) from a into b. */
-static void	send_chunk(t_node **a, t_node **b, int lo, int hi, t_op *op)
+static void	send_chunk(t_node **a, t_node **b, t_range chunk_rank, t_op *op)
 {
 	int	target;
 	int	seen;
 
-	target = hi - lo;
+	target = chunk_rank.hi - chunk_rank.lo;
 	seen = 0;
 	while (seen < target && *a)
 	{
-		if ((*a)->index >= lo && (*a)->index < hi)
+		if ((*a)->index >= chunk_rank.lo && (*a)->index < chunk_rank.hi)
 		{
-			pb(a, b, 1, op);
+			pb(a, b, op);
 			seen++;
-			if (*b && (*b)->next && (*b)->index < lo + (hi - lo) / 2)
-				rb(b, 1, op);
+			if (*b && (*b)->next && (*b)->index < chunk_rank.lo + (chunk_rank.hi
+					- chunk_rank.lo) / 2)
+				rb(b, op);
 		}
 		else
-			ra(a, 1, op);
+			ra(a, op);
 	}
 }
 
-/* Pour b back onto a, largest rank first, rotating the short way. */
 static void	push_back(t_node **a, t_node **b, t_op *op)
 {
 	t_node	*max;
@@ -76,22 +74,22 @@ static void	push_back(t_node **a, t_node **b, t_op *op)
 		if (pos <= size / 2)
 		{
 			while (*b != max)
-				rb(b, 1, op);
+				rb(b, op);
 		}
 		else
 		{
 			while (*b != max)
-				rrb(b, 1, op);
+				rrb(b, op);
 		}
-		pa(a, b, 1, op);
+		pa(a, b, op);
 	}
 }
 
 void	sort_medium(t_node **a, t_node **b, t_op *op)
 {
-	int	n;
-	int	size;
-	int	lo;
+	int		n;
+	int		size;
+	t_range	chunk_rank;
 
 	n = ft_lstsize(*a);
 	if (n <= 5)
@@ -100,11 +98,12 @@ void	sort_medium(t_node **a, t_node **b, t_op *op)
 		return ;
 	}
 	size = chunk_size_for(n);
-	lo = 0;
-	while (lo < n)
+	chunk_rank.lo = 0;
+	while (chunk_rank.lo < n)
 	{
-		send_chunk(a, b, lo, lo + size, op);
-		lo += size;
+		chunk_rank.hi = chunk_rank.lo + size;
+		send_chunk(a, b, chunk_rank, op);
+		chunk_rank.lo += size;
 	}
 	push_back(a, b, op);
 }

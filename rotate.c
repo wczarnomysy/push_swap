@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   rotate.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: telmo <telmo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tguezala <tguezala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 20:13:43 by tguezala          #+#    #+#             */
-/*   Updated: 2026/09/03 00:00:00 by telmo            ###   ########.fr       */
+/*   Updated: 2026/09/04 18:26:43 by tguezala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	ra(t_node **a, int print, t_op *op)
+void	ra(t_node **a, t_op *op)
 {
 	t_node	*first;
 	t_node	*last;
@@ -28,10 +28,16 @@ void	ra(t_node **a, int print, t_op *op)
 		last = last->next;
 	last->next = first;
 	first->prev = last;
-	do_op(op, OP_RA, print);
+	if (op)
+	{
+		op->count[OP_RA] += 1;
+		op->total += 1;
+	}
+	if (op->print)
+		write(1, "ra\n", 3);
 }
 
-void	rb(t_node **b, int print, t_op *op)
+void	rb(t_node **b, t_op *op)
 {
 	t_node	*first;
 	t_node	*last;
@@ -47,14 +53,26 @@ void	rb(t_node **b, int print, t_op *op)
 		last = last->next;
 	last->next = first;
 	first->prev = last;
-	do_op(op, OP_RB, print);
+	if (op)
+	{
+		op->count[OP_RB] += 1;
+		op->total += 1;
+	}
+	if (op->print)
+		write(1, "rb\n", 3);
 }
 
-void	rr(t_node **a, t_node **b, int print, t_op *op)
+void	rr(t_node **a, t_node **b, t_op *op)
 {
 	if (!a || !*a || !(*a)->next || !b || !*b || !(*b)->next)
 		return ;
-	ra(a, 0, NULL);
-	rb(b, 0, NULL);
-	do_op(op, OP_RR, print);
+	ra(a, NULL);
+	rb(b, NULL);
+	if (op)
+	{
+		op->count[OP_RR] += 1;
+		op->total += 1;
+	}
+	if (op->print)
+		write(1, "rr\n", 3);
 }

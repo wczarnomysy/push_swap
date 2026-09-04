@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   push.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: telmo <telmo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tguezala <tguezala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/14 18:36:08 by tguezala          #+#    #+#             */
-/*   Updated: 2026/09/03 00:00:00 by telmo            ###   ########.fr       */
+/*   Updated: 2026/09/04 18:26:07 by tguezala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	pa(t_node **a, t_node **b, int print, t_op *op)
+void	pa(t_node **a, t_node **b, t_op *op)
 {
 	t_node	*tmp;
 
@@ -27,10 +27,16 @@ void	pa(t_node **a, t_node **b, int print, t_op *op)
 	if (*a)
 		(*a)->prev = tmp;
 	*a = tmp;
-	do_op(op, OP_PA, print);
+	if (op)
+	{
+		op->count[OP_PA] += 1;
+		op->total += 1;
+	}
+	if (op->print)
+		write(1, "pa\n", 3);
 }
 
-void	pb(t_node **a, t_node **b, int print, t_op *op)
+void	pb(t_node **a, t_node **b, t_op *op)
 {
 	t_node	*tmp;
 
@@ -45,5 +51,11 @@ void	pb(t_node **a, t_node **b, int print, t_op *op)
 	if (*b)
 		(*b)->prev = tmp;
 	*b = tmp;
-	do_op(op, OP_PB, print);
+	if (op)
+	{
+		op->count[OP_PB] += 1;
+		op->total += 1;
+	}
+	if (op->print)
+		write(1, "pb\n", 3);
 }

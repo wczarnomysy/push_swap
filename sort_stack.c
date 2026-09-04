@@ -3,20 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   sort_stack.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: telmo <telmo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tguezala <tguezala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/24 20:58:33 by tguezala          #+#    #+#             */
-/*   Updated: 2026/09/03 00:00:00 by telmo            ###   ########.fr       */
+/*   Updated: 2026/09/04 18:05:47 by tguezala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-/*
-** Dispatch to the strategy requested on the command line. A forced flag
-** always runs its own algorithm (any input size); --adaptive (the default)
-** picks an algorithm from the disorder index.
-*/
 void	sort_stack(t_node **a, t_node **b, int size, t_op *op)
 {
 	if (size < 2 || ft_is_sorted(*a))

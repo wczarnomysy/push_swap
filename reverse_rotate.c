@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   reverse_rotate.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: telmo <telmo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tguezala <tguezala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/24 20:33:05 by tguezala          #+#    #+#             */
-/*   Updated: 2026/09/03 00:00:00 by telmo            ###   ########.fr       */
+/*   Updated: 2026/09/04 18:31:58 by tguezala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	rra(t_node **a, int print, t_op *op)
+void	rra(t_node **a, t_op *op)
 {
 	t_node	*prev;
 	t_node	*last;
@@ -31,10 +31,16 @@ void	rra(t_node **a, int print, t_op *op)
 	last->prev = NULL;
 	(*a)->prev = last;
 	*a = last;
-	do_op(op, OP_RRA, print);
+	if (op)
+	{
+		op->count[OP_RRA] += 1;
+		op->total += 1;
+	}
+	if (op->print)
+		write(1, "rra\n", 4);
 }
 
-void	rrb(t_node **b, int print, t_op *op)
+void	rrb(t_node **b, t_op *op)
 {
 	t_node	*prev;
 	t_node	*last;
@@ -53,14 +59,26 @@ void	rrb(t_node **b, int print, t_op *op)
 	last->prev = NULL;
 	(*b)->prev = last;
 	*b = last;
-	do_op(op, OP_RRB, print);
+	if (op)
+	{
+		op->count[OP_RRB] += 1;
+		op->total += 1;
+	}
+	if (op->print)
+		write(1, "rrb\n", 4);
 }
 
-void	rrr(t_node **a, t_node **b, int print, t_op *op)
+void	rrr(t_node **a, t_node **b, t_op *op)
 {
 	if (!a || !*a || !(*a)->next || !b || !*b || !(*b)->next)
 		return ;
-	rra(a, 0, NULL);
-	rrb(b, 0, NULL);
-	do_op(op, OP_RRR, print);
+	rra(a, NULL);
+	rrb(b, NULL);
+	if (op)
+	{
+		op->count[OP_RRR] += 1;
+		op->total += 1;
+	}
+	if (op->print)
+		write(1, "rrr\n", 4);
 }

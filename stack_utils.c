@@ -6,7 +6,7 @@
 /*   By: tguezala <tguezala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/24 19:25:45 by tguezala          #+#    #+#             */
-/*   Updated: 2026/09/03 00:00:00 by tguezala         ###   ########.fr       */
+/*   Updated: 2026/09/04 18:31:27 by tguezala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,11 @@ void	move_to_top(t_node **a, int pos, int len, t_op *op)
 	if (pos <= rra_steps)
 	{
 		while (pos-- > 0)
-			ra(a, 1, op);
+			ra(a, op);
 	}
 	else
 	{
 		while (rra_steps-- > 0)
-			rra(a, 1, op);
+			rra(a, op);
 	}
 }
