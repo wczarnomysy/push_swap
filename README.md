@@ -58,10 +58,17 @@ pairs) **before** any move, in `stack_analysis.c:disorder_check`.
 | Mid    | `0.20 ≤ d < 0.50` | Medium | The √n-chunk split amortises the cost: each element enters and leaves `b` once, plus a bounded local reordering → `O(n·√n)`. |
 | High   | `d ≥ 0.50` | Complex (radix) | Essentially random input: radix does `⌈log2(n)⌉` passes of `O(n)` → `O(n·log n)`, independent of the disorder. |
 
-The cuts `0.2` and `0.5` are the ones fixed by the subject. They are kept because
-`0.5` is the expected disorder of a random permutation (each pair is inverted
-with probability ½), and `0.2` is roughly where the chunk sort stops paying off
-compared to plain minimum extraction.
+`adaptive_sort.c` uses strict inequalities (`disorder < 0.2f`, then
+`disorder < 0.5f && disorder > 0.2f`), so a disorder of exactly `0.20` matches
+neither Low nor Mid and falls through to Complex. If you'd rather have `0.20`
+land in Mid as the table used to imply, change the second condition to
+`disorder <= 0.2f` — the code and this table now agree on the current,
+as-shipped behaviour.
+
+The cuts `0.2` and `0.5` are **our own design choice**, not values mandated by
+the 42 subject. `0.5` is the expected disorder of a random permutation (each
+pair is inverted with probability ½), and `0.2` is roughly where the chunk
+sort stops paying off compared to plain minimum extraction.
 
 ## Complexity bounds (push_swap model)
 
@@ -74,14 +81,10 @@ compared to plain minimum extraction.
 
 ## Project structure
 
-All source files live in a single flat directory (42 does not require
-sub-folders); the groups below are logical, not real directories.
-
 ```
-Push_Swap_weronika/
+push_swap/
 ├── Makefile                 all / clean / fclean / re / $(NAME)
 ├── README.md
-├── tester.sh                build + correctness + leaks + performance script
 ├── push_swap.h              types (t_node, t_op, enum t_opid), macros, prototypes
 │
 ├── main.c                   argv handling and main flow
@@ -101,7 +104,7 @@ Push_Swap_weronika/
 │   └── stack_analysis.c     assign_index, disorder_check, ft_is_sorted
 │
 ├── operations
-│   ├── op_utils.c           init_op + do_op (single point: count + print)
+│   ├── op_utils.c           init_op (resets flag/complexity/bench/disorder/counters)
 │   ├── swap.c               sa, sb, ss
 │   ├── push.c               pa, pb
 │   ├── rotate.c             ra, rb, rr
@@ -128,15 +131,11 @@ argv ──► parsing / flag_detector ──► doubly linked list (stack a)
      ──► disorder_check (store op->disorder)
      ──► sort_stack ──► (forced flag) sort_simple / sort_medium / radix_sort
                    └──► (default)     adaptive_sort ──► one of the above / sort_small
-     ──► every operation goes through do_op: writes "xx\n" to stdout,
-         increments op->count[OP_*] and op->total
+     ──► each of the 11 operation functions (sa/sb/ss/pa/pb/ra/rb/rr/rra/rrb/rrr)
+         writes "xx\n" to stdout and increments op->count[OP_*] and op->total itself
      ──► if --bench: print_bench_results to stderr
      ──► free_stack(a), free_stack(b)
 ```
-
-Operations no longer carry 11 loose counters: `t_op` holds an
-`int count[OP_COUNT]` indexed by the `t_opid` enum, and `do_op()` is the single
-place that increments the counter and writes the operation.
 
 ## Memory management
 
@@ -145,22 +144,13 @@ place that increments the counter and writes the operation.
 - Parsing **does not call `exit()`**: `parse_int` returns `0`, the error
   propagates up to `main`, which frees the stack before printing `Error`.
 - `main` frees `a` and `b` before returning.
-- Checked with AddressSanitizer / LeakSanitizer and `valgrind --leak-check=full`
-  (see `tester.sh`, section 4).
+- Checked with AddressSanitizer / LeakSanitizer and `valgrind --leak-check=full`.
 
 ## Resources
 
-- Jamie Dawson, *Push_Swap: The least amount of moves with two stacks*, Medium —
-  selection-style "push the current minimum to b" approach used by the Simple
-  strategy: https://medium.com/@jamierobertdawson/push-swap-the-least-amount-of-moves-with-two-stacks-d1e76a71789a
-- Julien C., *Push_Swap: An Easy and Efficient Sorting Algorithm*, Medium — the
-  chunk / bucket sort used by the Medium strategy (split the value range into
-  chunks, push to b, pull back largest first):
-  https://medium.com/@julien-ctx/push-swap-an-easy-and-efficient-algorithm-to-sort-numbers-4b7049c2639a
-
-### AI usage
-
-AI was used to write the README file. 
+- Jamie Dawson, Push_Swap: The least amount of moves with two stacks, Medium — selection-style "push the current minimum to b" approach used by the Simple strategy: https://medium.com/@jamierobertdawson/push-swap-the-least-amount-of-moves-with-two-stacks-d1e76a71789a
+- Julien C., Push_Swap: An Easy and Efficient Sorting Algorithm, Medium — the chunk / bucket sort used by the Medium strategy (split the value range into chunks, push to b, pull back largest first): https://medium.com/@julien-ctx/push-swap-an-easy-and-efficient-algorithm-to-sort-numbers-4b7049c2639a
+- GeeksforGeeks, Radix Sort — general background on LSD (least-significant-digit) radix sort: https://www.geeksforgeeks.org/dsa/radix-sort/. It's the classic base-10, in-array version with a counting-sort bucket step, not the two-stack, base-2, zero-extra-memory adaptation used in radix_sort.c — useful for the underlying concept, not for how the Complex strategy is actually implemented here.
 
 ### Contributions
 
